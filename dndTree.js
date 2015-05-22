@@ -557,6 +557,24 @@ function getJSON(parent, list)
 
                 else
                 {
+                    /*switch(item.type)
+                    {
+                        case "Date":
+                            parent[item.name] = "{d: 22, m: 05, y: 2015}";
+                        break;
+
+                        case "Boolean":
+                            parent[item.name] = "true";
+                        break;
+
+                        case "Numeric":
+                            parent[item.name] = "0";
+                        break;
+
+                        default:
+                            parent[item.name] = "value";
+                    }*/
+
                     parent[item.name] = item.type || "String";
                 }
             }
@@ -588,7 +606,10 @@ $(function(){
     }
 
     $('.viewJSON').on('click', function(){
-        $('#json-container > pre').html(syntaxHighlight(JSON.stringify(getJSON(obj, treeData.children || treeData._children), null, 2)+"\n\n"));
+        var code = JSON.stringify(getJSON(obj, treeData.children || treeData._children), null, 2);
+        code = syntaxHighlight(code.replace(/\"Numeric\"/gm, 0).replace(/\"Date\"/gm, "{d: 22, m: 05, y: 2015}", "gm").replace(/\"Boolean\"/gm, "true") + "\n\n");
+
+        $('#json-container > pre').html(code);
 
         if($(this).text() === "Show JSON")
         {
