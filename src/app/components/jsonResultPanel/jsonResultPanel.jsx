@@ -7,22 +7,22 @@ var JsonResultPanel = React.createClass(
   },
 
   syntaxHighlight(json) {
-	json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-	return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-	  var cls = 'number';
-	  if (/^"/.test(match)) {
-	      if (/:$/.test(match)) {
-	          cls = 'key';
-	      } else {
-	          cls = 'string';
-	      }
-	  } else if (/true|false/.test(match)) {
-	      cls = 'boolean';
-	  } else if (/null/.test(match)) {
-	      cls = 'null';
-	  }
-	  return '<span class="' + cls + '">' + match + '</span>';
-	});
+  	json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  	return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+  	  var cls = 'number';
+  	  if (/^"/.test(match)) {
+  	      if (/:$/.test(match)) {
+  	          cls = 'key';
+  	      } else {
+  	          cls = 'string';
+  	      }
+  	  } else if (/true|false/.test(match)) {
+  	      cls = 'boolean';
+  	  } else if (/null/.test(match)) {
+  	      cls = 'null';
+  	  }
+  	  return '<span class="' + cls + '">' + match + '</span>';
+  	});
   },
 
   getJSON(parent, list)
@@ -81,10 +81,13 @@ var JsonResultPanel = React.createClass(
 
   calculateJSONResult()
   {
-  	var code = JSON.stringify(this.getJSON({}, treeData.children || treeData._children), null, 2);
-    code = this.syntaxHighlight(code.replace(/\"Numeric\"/gm, 0).replace(/\"Date\"/gm, "{d: 22, m: 05, y: 2015}", "gm").replace(/\"Boolean\"/gm, "true") + "\n\n");
+    if(window.treeData)
+    {
+    	var code = JSON.stringify(this.getJSON({}, treeData.children || treeData._children), null, 2);
+      code = this.syntaxHighlight(code.replace(/\"Numeric\"/gm, 0).replace(/\"Date\"/gm, "{d: 22, m: 05, y: 2015}", "gm").replace(/\"Boolean\"/gm, "true") + "\n\n");
 
-    React.findDOMNode(this.refs.pre).innerHTML = code;
+      React.findDOMNode(this.refs.pre).innerHTML = code;
+    }
   }
 });
 
