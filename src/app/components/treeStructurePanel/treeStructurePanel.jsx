@@ -27,12 +27,12 @@ var TreeStructurePanel = React.createClass(
 
 	            for(var prop in obj)
 	            {
-	                if(prop != "name" && prop != "children")
+	                if(prop != "name" && prop != "children" && prop != "_children")
 	                {
 	                    delete obj[prop];
 	                }
 
-	                if(obj["children"] && obj["children"].length == 0)
+	                /*if(obj["children"] && obj["children"].length == 0)
 	            	{
 	            		delete obj["children"];
 	            	}
@@ -40,7 +40,7 @@ var TreeStructurePanel = React.createClass(
 	            	if(obj["_children"] && obj["_children"].length == 0)
 	            	{
 	            		delete obj["_children"];
-	            	}
+	            	}*/
 	            }
 
 	            _removeParents(obj["children"] || collapsedChildren);
